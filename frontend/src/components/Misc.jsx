@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/components.css';
+import { CARD_CONFIGS } from './EmergencyCards';
 
 /* ============================================================
    EmergencyModal
@@ -122,7 +123,7 @@ export function EmergencyModal({ show, countdown, onCancel, t }) {
 /* ============================================================
    MapCard
    ============================================================ */
-export function MapCard({ location, t }) {
+export function MapCard({ location, hospitals = [], emergencyLocation, t }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -141,7 +142,7 @@ export function MapCard({ location, t }) {
     >
       {/* Top shimmer */}
       <div style={{
-        position: 'absolute', top: 0, left: '10%', right: '10%', height: 1,
+        position: 'absolute', top: 0, left: '8%', right: '8%', height: 1,
         background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.35), rgba(59,130,246,0.35), transparent)',
       }} />
 
@@ -174,7 +175,7 @@ export function MapCard({ location, t }) {
       </div>
 
       {/* Map visual */}
-      <div className="map-grid" style={{
+      <div className="map-visual map-grid" style={{
         position: 'relative',
         height: 120,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -182,7 +183,7 @@ export function MapCard({ location, t }) {
         overflow: 'hidden',
       }}>
         {/* Ambient glow */}
-        <div style={{
+        <div className="map-ambient-glow" style={{
           position: 'absolute',
           width: 180, height: 180,
           borderRadius: '50%',
@@ -193,6 +194,7 @@ export function MapCard({ location, t }) {
         {[1, 2, 3].map(i => (
           <div
             key={i}
+            className="map-ring"
             style={{
               position: 'absolute',
               width: 20, height: 20,
@@ -203,15 +205,73 @@ export function MapCard({ location, t }) {
           />
         ))}
 
+        {/* Hospitals */}
+        {hospitals.map((hospital, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: `${20 + i * 15}%`,
+              top: `${15 + i * 10}%`,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
+              fontSize: 12,
+            }}
+          >
+            <span className="hospital-pin" style={{
+              fontSize: 12,
+            }}>🏥</span>
+            <span className="hospital-label" style={{
+              fontSize: 8,
+              fontFamily: 'monospace',
+              padding: '1px 4px',
+              borderRadius: 4,
+              background: 'rgba(239,68,68,0.2)',
+              border: '1px solid rgba(239,68,68,0.4)',
+              color: '#fff',
+              whiteSpace: 'nowrap',
+            }}>
+              {hospital.distance}mi
+            </span>
+          </div>
+        ))}
+
+        {/* Emergency location pin */}
+        {emergencyLocation && (
+          <div style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5,
+            animation: 'pin-bob 2s ease-in-out infinite',
+          }}>
+            <span style={{ fontSize: 24, color: '#EF4444' }}>🚨</span>
+            <span style={{
+              fontSize: 9.5,
+              fontFamily: 'monospace',
+              padding: '2px 8px',
+              borderRadius: 6,
+              background: 'rgba(239,68,68,0.3)',
+              border: '1px solid rgba(239,68,68,0.5)',
+              color: '#fff',
+              whiteSpace: 'nowrap',
+            }}>
+              EMERGENCY
+            </span>
+          </div>
+        )}
+
         {/* Pin */}
         <div style={{
           position: 'relative', zIndex: 10,
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5,
-          animation: 'pin-bob 2s ease-in-out infinite',
+          animation: emergencyLocation ? 'none' : 'pin-bob 2s ease-in-out infinite',
         }}>
-          <span style={{ fontSize: 24 }}>📍</span>
+          <span className="map-pin" style={{ 
+            fontSize: 24,
+          }}>📍</span>
           {location && (
-            <span style={{
+            <span className="map-pin-label" style={{
               fontSize: 9.5,
               fontFamily: 'monospace',
               padding: '2px 8px',
@@ -235,7 +295,10 @@ export function MapCard({ location, t }) {
       }}>
         <span className="neon-dot" style={{ width: 6, height: 6 }} />
         <span style={{ fontSize: 11, color: 'rgba(150,170,210,0.55)', fontWeight: 400 }}>
-          {t('yourCurrentLocation')}
+          {hospitals.length > 0 
+            ? `${hospitals.length} hospitals found: ${hospitals.slice(0, 2).map(h => h.name).join(', ')}${hospitals.length > 2 ? '...' : ''}`
+            : t('yourCurrentLocation')
+          }
         </span>
       </div>
     </motion.div>
@@ -278,7 +341,6 @@ export function Toast({ show, message }) {
   );
 }
 
-
 /* ============================================================
    Footer
    ============================================================ */
@@ -287,7 +349,7 @@ export function Footer({ t }) {
     <footer style={{
       position: 'relative', zIndex: 10,
       marginTop: 'auto',
-      background: 'rgba(5, 7, 20, 0.75)',
+      background: 'rgba(5,7,20,0.75)',
       backdropFilter: 'blur(12px)',
       borderTop: '1px solid rgba(255,255,255,0.05)',
     }}>
@@ -295,9 +357,11 @@ export function Footer({ t }) {
         maxWidth: 1200,
         margin: '0 auto',
         padding: '16px 28px',
-        display: 'flex', alignItems: 'center',
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'space-between',
-        flexWrap: 'wrap', gap: 12,
+        flexWrap: 'wrap',
+        gap: 12,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span className="neon-dot" style={{ width: 6, height: 6 }} />
@@ -306,7 +370,7 @@ export function Footer({ t }) {
           </span>
         </div>
         <nav style={{ display: 'flex', gap: 20 }}>
-          {[t('privacy'), t('terms'), t('contact')].map(link => (
+          {['privacy', 'terms', 'contact'].map(link => (
             <a key={link} href="#" style={{
               fontSize: 11, color: 'rgba(120,140,185,0.5)',
               textDecoration: 'none', transition: 'color 0.2s ease',
@@ -314,7 +378,7 @@ export function Footer({ t }) {
               onMouseEnter={e => e.target.style.color = '#fff'}
               onMouseLeave={e => e.target.style.color = 'rgba(120,140,185,0.5)'}
             >
-              {link}
+              {t(link)}
             </a>
           ))}
         </nav>

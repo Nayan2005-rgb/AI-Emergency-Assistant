@@ -64,9 +64,10 @@ export default function SidePanel({ open, selected, onClose, onOption, t }) {
               borderLeft: '1px solid rgba(255,255,255,0.07)',
               boxShadow: '-16px 0 50px rgba(0,0,0,0.6)',
             }}
+            className="side-panel"
           >
             {/* Color strip on left edge */}
-            <div style={{
+            <div className="side-panel-color-strip" style={{
               position: 'absolute', top: 0, left: 0, bottom: 0, width: 3,
               background: cardConfig
                 ? cardConfig.barColor
@@ -75,7 +76,7 @@ export default function SidePanel({ open, selected, onClose, onOption, t }) {
             }} />
 
             {/* Panel header */}
-            <div style={{
+            <div className="side-panel-header" style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '20px 20px 18px 24px',
               borderBottom: '1px solid rgba(255,255,255,0.05)',
@@ -101,72 +102,75 @@ export default function SidePanel({ open, selected, onClose, onOption, t }) {
                   borderRadius: 8,
                   border: '1px solid rgba(255,255,255,0.1)',
                   background: 'rgba(255,255,255,0.05)',
-                  color: 'rgba(180,195,230,0.65)',
-                  fontSize: 13, cursor: 'pointer',
+                  color: 'rgba(255,255,255,0.6)',
+                  fontSize: 16,
+                  cursor: 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  transition: 'background 0.2s',
+                  transition: 'all 0.2s ease',
                 }}
-                onMouseEnter={e => e.target.style.background = 'rgba(255,255,255,0.12)'}
-                onMouseLeave={e => e.target.style.background = 'rgba(255,255,255,0.05)'}
+                onMouseEnter={e => {
+                  e.target.style.background = 'rgba(255,255,255,0.1)';
+                  e.target.style.color = '#fff';
+                }}
+                onMouseLeave={e => {
+                  e.target.style.background = 'rgba(255,255,255,0.05)';
+                  e.target.style.color = 'rgba(255,255,255,0.6)';
+                }}
               >
                 ✕
               </button>
             </div>
 
             {/* Options list */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
               {options.map((opt, i) => (
                 <motion.button
-                  key={i}
+                  key={opt.action}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.06, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: i * 0.08 }}
                   onClick={() => onOption(opt)}
                   style={{
                     width: '100%',
                     display: 'flex', alignItems: 'center', gap: 14,
-                    padding: '13px 14px',
-                    borderRadius: 14,
-                    border: '1px solid rgba(255,255,255,0.07)',
+                    padding: '14px 16px',
+                    borderRadius: 12,
+                    border: '1px solid rgba(255,255,255,0.08)',
                     background: 'rgba(255,255,255,0.03)',
+                    marginBottom: 8,
                     cursor: 'pointer',
-                    textAlign: 'left',
                     transition: 'all 0.2s ease',
                   }}
-                  whileHover={{
-                    x: 4,
-                    backgroundColor: `${opt.color}10`,
-                    borderColor: `${opt.color}35`,
+                  onMouseEnter={e => {
+                    e.target.style.background = 'rgba(255,255,255,0.06)';
+                    e.target.style.borderColor = `${opt.color}33`;
                   }}
-                  whileTap={{ scale: 0.98 }}
+                  onMouseLeave={e => {
+                    e.target.style.background = 'rgba(255,255,255,0.03)';
+                    e.target.style.borderColor = 'rgba(255,255,255,0.08)';
+                  }}
                 >
-                  <span style={{
-                    width: 38, height: 38, flexShrink: 0,
+                  <div style={{
+                    width: 40, height: 40,
                     borderRadius: 10,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 20,
-                    background: `${opt.color}14`,
-                    border: `1px solid ${opt.color}28`,
+                    background: `${opt.color}15`,
+                    border: `1px solid ${opt.color}30`,
+                    flexShrink: 0,
                   }}>
                     {opt.icon}
-                  </span>
-                  <span style={{ flex: 1, fontSize: 13, fontWeight: 500, color: '#fff' }}>
+                  </div>
+                  <span style={{
+                    fontSize: 13,
+                    fontWeight: 500,
+                    color: '#fff',
+                    textAlign: 'left',
+                  }}>
                     {t(opt.textKey)}
                   </span>
-                  <span style={{ fontSize: 14, color: 'rgba(150,170,210,0.4)' }}>→</span>
                 </motion.button>
               ))}
-            </div>
-
-            {/* Footer */}
-            <div style={{
-              padding: '14px 20px',
-              borderTop: '1px solid rgba(255,255,255,0.05)',
-              textAlign: 'center',
-            }}>
-              <p style={{ fontSize: 10, color: 'rgba(100,120,165,0.5)', letterSpacing: '0.5px' }}>
-                Guardian AI • Emergency Response System
-              </p>
             </div>
           </motion.div>
         </>

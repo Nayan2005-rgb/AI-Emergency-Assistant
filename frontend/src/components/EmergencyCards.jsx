@@ -4,7 +4,7 @@ import '../styles/EmergencyCards.css';
 const CARD_CONFIGS = [
   {
     id: 'medical',
-    icon: '🏥',
+    icon: '🛏️',
     accentColor: '#EF4444',
     glowColor:   'rgba(239,68,68,0.4)',
     barColor:    'linear-gradient(90deg, #EF4444, #F87171)',
@@ -70,6 +70,7 @@ export default function EmergencyCards({ selected, onSelect, t }) {
           gap: 16,
           width: '100%',
         }}
+        className="emergency-cards-grid"
       >
         {CARD_CONFIGS.map((card) => {
           const isSelected = selected === card.id;
@@ -133,11 +134,14 @@ export default function EmergencyCards({ selected, onSelect, t }) {
               )}
 
               {/* Card content */}
-              <div style={{ padding: '28px 24px 32px' }}>
+              <div className="emergency-card" style={{ 
+                padding: '24px 20px 28px',
+              }}>
                 {/* Icon in a colored pill */}
                 <motion.div
                   whileHover={{ scale: 1.12, rotate: 4 }}
                   transition={{ type: 'spring', stiffness: 380 }}
+                  className="emergency-card-icon"
                   style={{
                     width: 56, height: 56,
                     borderRadius: 16,
@@ -153,7 +157,7 @@ export default function EmergencyCards({ selected, onSelect, t }) {
                 </motion.div>
 
                 {/* Title */}
-                <h3 style={{
+                <h3 className="emergency-card-title" style={{
                   fontFamily: "'Inter', sans-serif",
                   fontSize: 15,
                   fontWeight: 700,
@@ -166,7 +170,7 @@ export default function EmergencyCards({ selected, onSelect, t }) {
                 </h3>
 
                 {/* Description */}
-                <p style={{
+                <p className="emergency-card-desc" style={{
                   fontSize: 12,
                   color: 'rgba(160, 178, 220, 0.65)',
                   lineHeight: 1.5,

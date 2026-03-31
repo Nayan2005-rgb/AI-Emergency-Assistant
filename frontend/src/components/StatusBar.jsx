@@ -23,10 +23,10 @@ export default function StatusBar({ location, t }) {
         borderBottom: '1px solid rgba(255,255,255,0.05)',
       }}
     >
-      <div style={{
+      <div className="status-bar" style={{
         maxWidth: 1200,
         margin: '0 auto',
-        padding: '0 28px',
+        padding: '0 16px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -52,6 +52,7 @@ export default function StatusBar({ location, t }) {
                   padding: '0 18px',
                   whiteSpace: 'nowrap',
                 }}
+                className="status-item"
               >
                 {item.dotColor ? (
                   <span className="neon-dot" style={{
