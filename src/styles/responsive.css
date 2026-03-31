@@ -1,0 +1,141 @@
+/* Mobile Responsive Styles */
+
+/* ── Header Responsive ── */
+@media (max-width: 768px) {
+  .header-live-badge {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-logo {
+    font-size: 12px !important;
+  }
+  
+  .header-tagline {
+    font-size: 7px !important;
+  }
+}
+
+/* ── Emergency Cards Responsive ── */
+@media (max-width: 768px) {
+  .emergency-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  
+  .emergency-card {
+    padding: 20px 16px 24px !important;
+  }
+  
+  .emergency-card-icon {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 24px !important;
+    margin-bottom: 14px !important;
+  }
+  
+  .emergency-card-title {
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .emergency-card-desc {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .emergency-cards-grid {
+    gap: 8px !important;
+  }
+}
+
+/* ── Map Card Responsive ── */
+@media (max-width: 768px) {
+  .map-visual {
+    height: 100px !important;
+  }
+  
+  .map-ambient-glow {
+    width: 140px !important;
+    height: 140px !important;
+  }
+  
+  .map-ring {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  .map-pin {
+    font-size: 20px !important;
+  }
+  
+  .map-pin-label {
+    font-size: 8px !important;
+    padding: 1px 6px !important;
+  }
+  
+  .hospital-pin {
+    font-size: 16px !important;
+  }
+  
+  .hospital-label {
+    font-size: 7px !important;
+    padding: 1px 3px !important;
+  }
+}
+
+/* ── Side Panel Responsive ── */
+@media (max-width: 768px) {
+  .side-panel {
+    width: 100% !important;
+    right: 0 !important;
+    left: 0 !important;
+    border-left: none !important;
+    border-top: 1px solid rgba(255,255,255,0.07) !important;
+  }
+  
+  .side-panel-color-strip {
+    width: 100% !important;
+    height: 3px !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    border-radius: 0 0 3px 3px !important;
+  }
+  
+  .side-panel-header {
+    padding: 16px 20px 14px 20px !important;
+  }
+}
+
+/* ── Status Bar Responsive ── */
+@media (max-width: 480px) {
+  .status-bar {
+    padding: 0 12px !important;
+    height: 36px !important;
+  }
+  
+  .status-item {
+    padding: 0 12px !important;
+    gap: 5px !important;
+  }
+}
+
+/* ── Main Container Responsive ── */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 24px 16px 60px !important;
+    gap: 24px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: 20px 12px 40px !important;
+    gap: 20px !important;
+  }
+}
